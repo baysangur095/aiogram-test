@@ -5,6 +5,7 @@ from handlers.notes import notes_router
 import config
 import asyncio
 from aiogram.fsm.storage.redis import RedisStorage
+from middlewares.throttling import ThrottlingMiddleware
 
 bot = Bot(token=config.BOT_TOKEN)
 
@@ -18,6 +19,7 @@ async def on_startup():
 
 
 dp.startup.register(on_startup)
+dp.message.outer_middleware(ThrottlingMiddleware())
 
 
 
